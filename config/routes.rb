@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :stories
 
+  resources :activities
+
   resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
