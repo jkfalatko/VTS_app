@@ -5,10 +5,316 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="bootstrap/css/cssmi">
+  <link rel="stylesheet" type="text/css" href="bootstrap-social-gh-pages/bootstrap-social.css"> 
+  <link rel="stylesheet" type="text/css" href="font-awesome-4.0.3/css/font-awesome.css">
+
+  <style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+  
+  .highlight {
+    background-color: #d3d3d3;
+  }
+
+  table {
+    border-collapse: collapse;  
+    border: 0px;
+  }
+  td, th {
+    border: none;
+  }
+
+  .filter {
+    border: 1px;
+  }
+  .tile {
+    max-width: 70px;
+  }
+  #story-buttons{
+    float: right;
+  }
+
+  .hanging {
+    position: absolute;
+    top: -9px;
+    right: 8px;
+  }
+
+  </style>
 </head>
 <body>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 
-<%= yield %>
+    <div class="container-fluid">
+
+      <div class="navbar-left navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse"></button>
+        <a class="navbar-brand" href="#">Virtual Town Square</a>
+      </div>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a class="dropdown-toggle" href="#" data-toggle="dropdown">Log In</a>
+          <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+            <form class="form-horizontal navbar-form" role="form">
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox"> Remember me
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-default">Sign in</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </li>
+        <li class="dropdown">
+          <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Help</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Log In/Out</a></li>
+              </ul>
+            </li>
+          </div>
+        </li>
+
+
+      </ul>
+    </div><!--end fluid container-->
+  </nav>
+
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-md-2 col-sm-2 col-xs-12"> 
+
+        <!--contribute block-->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Contribute</h3>
+          </div>
+          <div class="panel-body">
+            <a>Create a Blog</a><br>
+            <a>Share Story</a><br>
+            Suggest:<br>
+            <a>&nbsp;&nbsp;News Source</a><br />
+            <a>&nbsp;&nbsp;Twitter Account</a><br />
+            <a>&nbsp;&nbsp;Facebook Page</a><br/>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+
+          <div class="panel-heading">
+            <h3 class="panel-title">Filter</h3>
+          </div>
+
+          <div class="panel-body" id="filter">            
+
+            <div class="filter-date">
+              <h4>Time</h4>
+
+              <a href="#">
+                <span class="pull-right">42</span>
+                Most Recent
+              </a><br />
+
+              <a href="#">
+                <span class="pull-right">42</span>
+                This Week
+              </a><br />
+
+              <a href="#">
+                <span class="pull-right">42</span>
+                This Month
+              </a><br />
+
+              <a href="#">
+                <span class="pull-right">42</span>
+                All Stories
+              </a>
+
+            </div> <!--end filter date-->
+
+
+            <div class="filter-source">
+              <h4>Source</h4>
+              <small>
+                Showing <a id="sources_popover" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="top" 
+                data-trigger="hover" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                3</a>Sources
+              </small>
+              <br>
+
+              <a href="#" class="date-range">Citizens First</a>,
+
+              <a href="#" class="date-range">NRV News</a>,
+
+              <a href="#" class="date-range">SWVA Today</a>
+              <br/>
+              <small><a id="openModal" data-toggle="modal" href="#myModal">Add other</a></small>
+
+              <!-- Modal -->
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title">Add Source</h4>
+                    </div>
+                    <div class="modal-body">
+
+<form role="form">
+                        <% for source in @sources %>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox"> <%=h source.title %>
+                          </label>
+                        </div>
+                        <% end %>
+                      </form>     
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Select All</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+              </div><!-- /.modal -->
+
+            </div><!--end filter source-->
+
+
+
+          </div><!--end panel body-->
+        </div><!--end panel-->
+      </div><!--col-md-2-->
+
+
+      <div class="col-md-10 col-sm-10 col-xs-12">
+        <ul class="nav nav-tabs">
+          <!--<li class="active"><a href="#">Everything</a></li>-->
+          <li class="active"><a id="everything" href="#" data-toggle="popover" data-placement="bottom" 
+            data-container="body" data-trigger="hover" data-content="All stories without filter.">
+            Everything</a>
+          </li>
+          <li><a id="vts" href="#" data-toggle="popover" data-placement="bottom" 
+            data-container="body" data-trigger="hover" data-content="All stories in the database.">
+            VTS</a>
+          </li>
+          <li><a id="follows" href="#" data-toggle="popover" data-placement="bottom" 
+            data-container="body" data-trigger="hover" data-content="Stories that people you follow have liked or shared.">
+            Follows</a>
+          </li>
+          <li><a id="favorites" href="#" data-toggle="popover" data-placement="bottom" 
+            data-container="body" data-trigger="hover" data-content="Stories that you have liked, commented, tagged, or shared.">
+            Favorites</a>
+          </li>
+          <li><a id="me" href="#" data-toggle="popover" data-placement="bottom" 
+            data-container="body" data-trigger="hover" data-content="Stories that you have created. ">
+            Me</a>
+          </li>      
+        </ul>  
+
+        <div class="container-fluid">
+
+          <!--searchbar row-->
+          <div class="row">
+            <div class="col-md-12">
+              <br />
+              <div id="searchbar">
+                <input type=search name=s results="0" placeholder="Search"><br />
+              </div>
+            </div>
+          </div><!--end row with searchbar-->
+
+          <br />  
+
+          <!--row 1-->
+          <div class="row">
+
+            
+            <div class="col-md-12">
+                  <% for story in @stories %>
+              <div class="panel panel-default story" >
+                <div class="panel-body">
+                  <div class="container-fluid">
+              
+
+                    <div class="row">
+                      
+                      <div class="col-md-1" style="height:100%">
+
+                        <a href="#">
+                          <img class="img-thumbnail img-responsive tile" src="http://placehold.it/70x70" alt="picture">
+                        </a>
+
+                        <div id="story-buttons">
+                          <a class="btn btn-social-icon btn-facebook btn-xs"><i class="fa fa-facebook"></i></a>
+                          <a class="btn btn-social-icon btn-twitter btn-xs"><i class="fa fa-twitter"></i></a>
+                          <a class="btn btn-social-icon btn-google-plus btn-xs"><i class="fa fa-google-plus"></i></a>
+                        </div><!--end buttons-->
+                      </div><!--/col-md-1-->
+                      <div class="col-md-11" style="height:100%">
+                     
+                        <h4><%=h story.title %></h4>
+                        <p><%=h story.story %>
+                          <a href="#">Like</a>&nbsp;&#183;&nbsp;<a href="#">Comment</a>&nbsp;&#183;&nbsp;<a href="#">Tag</a>&nbsp;&#183;&nbsp;<a href="#">Share</a>
+                        </p>
+                        
+                      </div>
+                      
+                    </div><!--end row-->
+                    
+                  </div><!--end container-fluid-->
+                </div><!--end panel body-->
+              </div><!--end panel-->
+              <% end %>
+            </div><!--end row 2, story 1-->
+
+
+
+          <br >
+
+        </div><!--end .container-fluid of stories rows-->
+
+      </div><!--end .col-md-10-->
+
+    </div><!--end .2 and .10 row-->
+  </div><!--end container-fluid-->
+
+
+  
 
 </body>
 </html>
